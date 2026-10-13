@@ -3,7 +3,8 @@
 > Solo para demostración académica. Los datos son ficticios.
 > Si defines `SEED_ADMIN_PASSWORD` / `SEED_PERSONAL_PASSWORD` antes de ejecutar el seed, esas contraseñas reemplazan a las de este archivo.
 
-**URL de la aplicación:** _(completar tras el despliegue en Render, p. ej. `https://petcare-xxxx.onrender.com`)_
+**URL de la aplicación:** <https://petcare-seru.onrender.com>
+(plan gratuito: si estuvo inactiva, la primera carga puede tardar unos 50 segundos)
 
 ## Administrador (acceso completo)
 | Campo | Valor |

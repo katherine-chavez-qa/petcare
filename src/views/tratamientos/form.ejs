@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+<h2><%= titulo %></h2>
+<form method="post" action="<%= action %>" novalidate>
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <% if (edicion) { %>
+    <p>Cita #<%= t.id_cita %> · <%= t.mascota %> · <%= t.servicio %></p>
+  <% } else { %>
+    <label>Cita (solo citas programadas)
+      <select name="id_cita" required>
+        <option value="">Selecciona una cita</option>
+        <% citas.forEach(function (c) { %>
+          <option value="<%= c.id_cita %>" <%= String(c.id_cita) === String(t.id_cita) ? 'selected' : '' %>>
+            <%= fmtFecha(c.fecha) %> <%= fmtHora(c.hora) %> · <%= c.mascota %> · <%= c.servicio %> · <%= c.personal %>
+          </option>
+        <% }) %>
+      </select>
+    </label>
+    <small>Al guardar, la cita pasará automáticamente a <strong>Completada</strong>.</small>
+  <% } %>
+  <label>Fecha del tratamiento
+    <input type="date" name="fecha" value="<%= t.fecha || '' %>" required>
+  </label>
+  <label>Descripción del tratamiento o servicio realizado
+    <textarea name="descripcion" rows="3" maxlength="2000" required><%= t.descripcion || '' %></textarea>
+  </label>
+  <label>Observaciones
+    <textarea name="observaciones" rows="3" maxlength="2000"><%= t.observaciones || '' %></textarea>
+  </label>
+  <div class="actions">
+    <button type="submit">Guardar</button>
+    <a role="button" class="secondary" href="/tratamientos">Cancelar</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

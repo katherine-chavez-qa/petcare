@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+<div class="toolbar">
+  <h2>Mascotas</h2>
+  <a href="/mascotas/nuevo" role="button">+ Nueva mascota</a>
+</div>
+<form method="get" action="/mascotas" class="grid">
+  <input type="search" name="q" value="<%= q %>" placeholder="Buscar por nombre, especie, raza o dueño">
+  <select name="cliente">
+    <option value="">Todos los clientes</option>
+    <% clientes.forEach(function (c) { %>
+      <option value="<%= c.id_cliente %>" <%= String(c.id_cliente) === cliente ? 'selected' : '' %>><%= c.nombre %></option>
+    <% }) %>
+  </select>
+  <button type="submit">Filtrar</button>
+</form>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Nombre</th><th>Especie</th><th>Raza</th><th>Edad</th><th>Cliente</th><th>Acciones</th></tr></thead>
+  <tbody>
+  <% if (!mascotas.length) { %><tr><td colspan="6">No hay mascotas registradas.</td></tr><% } %>
+  <% mascotas.forEach(function (m) { %>
+    <tr>
+      <td><%= m.nombre %></td><td><%= m.especie %></td><td><%= m.raza || '—' %></td><td><%= m.edad %></td><td><%= m.cliente %></td>
+      <td class="actions">
+        <a role="button" class="secondary" href="/mascotas/<%= m.id_mascota %>/editar">Editar</a>
+        <form method="post" action="/mascotas/<%= m.id_mascota %>/eliminar" onsubmit="return confirm('¿Eliminar esta mascota?')">
+          <input type="hidden" name="_csrf" value="<%= csrf %>">
+          <button class="contrast outline">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

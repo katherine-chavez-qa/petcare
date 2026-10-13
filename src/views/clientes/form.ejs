@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+<h2><%= titulo %></h2>
+<form method="post" action="<%= action %>" novalidate>
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <label>Nombre completo
+    <input name="nombre" value="<%= cliente.nombre || '' %>" maxlength="100" required>
+  </label>
+  <label>Teléfono (solo números)
+    <input name="telefono" value="<%= cliente.telefono || '' %>" inputmode="numeric" maxlength="15" required>
+  </label>
+  <label>Correo electrónico
+    <input type="email" name="correo" value="<%= cliente.correo || '' %>" maxlength="120" required>
+  </label>
+  <div class="actions">
+    <button type="submit">Guardar</button>
+    <a role="button" class="secondary" href="/clientes">Cancelar</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

@@ -1,0 +1,18 @@
+nav.top { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 1rem; }
+.flash { padding: .75rem 1rem; border-radius: var(--pico-border-radius); margin-bottom: 1rem; }
+.flash.success { background: #e3f6e8; color: #14532d; }
+.flash.error { background: #fde8e8; color: #7f1d1d; }
+.flash ul { margin: 0; padding-left: 1.2rem; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.stats article { text-align: center; margin: 0; }
+.stats .num { font-size: 2rem; font-weight: 700; }
+.actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+.actions form { margin: 0; }
+.actions a[role=button], .actions button { margin: 0; padding: .25rem .6rem; font-size: .85rem; width: auto; }
+.badge { padding: .1rem .5rem; border-radius: 1rem; font-size: .8rem; }
+.badge.Programada { background: #dbeafe; color: #1e3a8a; }
+.badge.Completada { background: #dcfce7; color: #14532d; }
+.badge.Cancelada { background: #fee2e2; color: #7f1d1d; }
+.table-wrap { overflow-x: auto; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.toolbar a[role=button] { width: auto; }

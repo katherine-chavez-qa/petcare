@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+<h2><%= titulo %></h2>
+<form method="post" action="<%= action %>" novalidate>
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <label>Nombre del servicio
+    <input name="nombre" value="<%= servicio.nombre || '' %>" maxlength="100" required>
+  </label>
+  <label>Descripción
+    <textarea name="descripcion" rows="3" maxlength="1000"><%= servicio.descripcion || '' %></textarea>
+  </label>
+  <div class="grid">
+    <label>Plan
+      <select name="plan" required>
+        <option value="">Selecciona un plan</option>
+        <% planes.forEach(function (p) { %><option <%= p === servicio.plan ? 'selected' : '' %>><%= p %></option><% }) %>
+      </select>
+    </label>
+    <label>Precio (COP)
+      <input name="precio" inputmode="decimal" value="<%= servicio.precio === undefined ? '' : servicio.precio %>" required>
+    </label>
+  </div>
+  <div class="actions">
+    <button type="submit">Guardar</button>
+    <a role="button" class="secondary" href="/servicios">Cancelar</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

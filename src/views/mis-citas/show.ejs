@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+<div class="toolbar"><h2>Cita #<%= cita.id_cita %></h2><a role="button" class="secondary" href="/mis-citas">← Mis citas</a></div>
+<article>
+  <p><strong>Fecha:</strong> <%= fmtFecha(cita.fecha) %> <%= fmtHora(cita.hora) %> ·
+     <strong>Estado:</strong> <span class="badge <%= cita.estado %>"><%= cita.estado %></span></p>
+  <p><strong>Mascota:</strong> <%= cita.mascota %> (<%= cita.especie %>) ·
+     <strong>Servicio:</strong> <%= cita.servicio %> (<%= cita.plan %>)</p>
+</article>
+
+<h3>Tratamientos registrados</h3>
+<% if (!tratamientos.length) { %><p>Aún no hay tratamientos registrados en esta cita.</p><% } %>
+<% tratamientos.forEach(function (x) { %>
+  <article>
+    <strong><%= fmtFecha(x.fecha) %></strong> — <%= x.descripcion %>
+    <% if (x.observaciones) { %><br><small>Observaciones: <%= x.observaciones %></small><% } %>
+  </article>
+<% }) %>
+
+<% if (cita.estado === 'Programada') { %>
+<h3>Registrar tratamiento realizado</h3>
+<form method="post" action="/mis-citas/<%= cita.id_cita %>/tratamiento" novalidate>
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <label>Fecha
+    <input type="date" name="fecha" value="<%= t.fecha %>" required>
+  </label>
+  <label>Descripción del tratamiento o servicio realizado
+    <textarea name="descripcion" rows="3" maxlength="2000" required><%= t.descripcion || '' %></textarea>
+  </label>
+  <label>Observaciones
+    <textarea name="observaciones" rows="3" maxlength="2000"><%= t.observaciones || '' %></textarea>
+  </label>
+  <small>Al guardar, la cita pasará a <strong>Completada</strong>.</small>
+  <button type="submit">Registrar tratamiento</button>
+</form>
+<% } %>
+<%- include('../partials/footer') %>

@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+<h2>Inicio</h2>
+<p>Bienvenido(a), <strong><%= user.nombre %></strong>. Hoy es <%= fmtFecha(hoy) %>.</p>
+
+<% if (totales) { %>
+<div class="stats">
+  <article><div class="num"><%= totales.clientes %></div>Clientes</article>
+  <article><div class="num"><%= totales.mascotas %></div>Mascotas</article>
+  <article><div class="num"><%= totales.servicios %></div>Servicios</article>
+  <article><div class="num"><%= totales.personal %></div>Personal</article>
+  <article><div class="num"><%= totales.tratamientos %></div>Tratamientos</article>
+</div>
+<% } %>
+<div class="stats">
+  <article><div class="num"><%= citas.total %></div>Citas en total</article>
+  <article><div class="num"><%= citas.programadas %></div>Programadas</article>
+  <article><div class="num"><%= citas.completadas %></div>Completadas</article>
+  <article><div class="num"><%= citas.canceladas %></div>Canceladas</article>
+</div>
+
+<h3>Citas de hoy</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Hora</th><th>Mascota</th><th>Cliente</th><th>Servicio</th><th>Personal</th><th>Estado</th></tr></thead>
+  <tbody>
+  <% if (!citasHoy.length) { %><tr><td colspan="6">No hay citas para hoy.</td></tr><% } %>
+  <% citasHoy.forEach(function (c) { %>
+    <tr>
+      <td><%= fmtHora(c.hora) %></td><td><%= c.mascota %></td><td><%= c.cliente %></td>
+      <td><%= c.servicio %></td><td><%= c.personal %></td>
+      <td><span class="badge <%= c.estado %>"><%= c.estado %></span></td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

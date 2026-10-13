@@ -1,0 +1,49 @@
+<%- include('../partials/header') %>
+<div class="toolbar">
+  <h2>Citas</h2>
+  <a href="/citas/nuevo" role="button">+ Programar cita</a>
+</div>
+<form method="get" action="/citas" class="grid">
+  <input type="date" name="fecha" value="<%= f.fecha %>" aria-label="Fecha">
+  <select name="estado" aria-label="Estado">
+    <option value="">Todos los estados</option>
+    <% estados.forEach(function (e) { %><option <%= e === f.estado ? 'selected' : '' %>><%= e %></option><% }) %>
+  </select>
+  <select name="personal" aria-label="Personal">
+    <option value="">Todo el personal</option>
+    <% personal.forEach(function (p) { %>
+      <option value="<%= p.id_personal %>" <%= String(p.id_personal) === f.personal ? 'selected' : '' %>><%= p.nombre %></option>
+    <% }) %>
+  </select>
+  <button type="submit">Filtrar</button>
+</form>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Fecha</th><th>Hora</th><th>Mascota</th><th>Cliente</th><th>Servicio</th><th>Personal</th><th>Estado</th><th>Acciones</th></tr></thead>
+  <tbody>
+  <% if (!citas.length) { %><tr><td colspan="8">No hay citas con esos filtros.</td></tr><% } %>
+  <% citas.forEach(function (c) { %>
+    <tr>
+      <td><%= fmtFecha(c.fecha) %></td><td><%= fmtHora(c.hora) %></td><td><%= c.mascota %></td><td><%= c.cliente %></td>
+      <td><%= c.servicio %></td><td><%= c.personal %></td>
+      <td><span class="badge <%= c.estado %>"><%= c.estado %></span></td>
+      <td class="actions">
+        <% if (c.estado === 'Programada') { %>
+          <a role="button" class="secondary" href="/citas/<%= c.id_cita %>/editar">Editar</a>
+          <a role="button" href="/tratamientos/nuevo?cita=<%= c.id_cita %>">Tratamiento</a>
+          <form method="post" action="/citas/<%= c.id_cita %>/cancelar" onsubmit="return confirm('¿Cancelar esta cita?')">
+            <input type="hidden" name="_csrf" value="<%= csrf %>">
+            <button class="secondary outline">Cancelar</button>
+          </form>
+        <% } %>
+        <form method="post" action="/citas/<%= c.id_cita %>/eliminar" onsubmit="return confirm('¿Eliminar esta cita?')">
+          <input type="hidden" name="_csrf" value="<%= csrf %>">
+          <button class="contrast outline">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

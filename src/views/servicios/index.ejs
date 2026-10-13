@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+<div class="toolbar">
+  <h2>Servicios y planes</h2>
+  <a href="/servicios/nuevo" role="button">+ Nuevo servicio</a>
+</div>
+<form method="get" action="/servicios" class="grid">
+  <input type="search" name="q" value="<%= q %>" placeholder="Buscar por nombre o descripción">
+  <select name="plan">
+    <option value="">Todos los planes</option>
+    <% planes.forEach(function (p) { %><option <%= p === plan ? 'selected' : '' %>><%= p %></option><% }) %>
+  </select>
+  <button type="submit">Filtrar</button>
+</form>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Servicio</th><th>Plan</th><th>Descripción</th><th>Precio</th><th>Acciones</th></tr></thead>
+  <tbody>
+  <% if (!servicios.length) { %><tr><td colspan="5">No hay servicios registrados.</td></tr><% } %>
+  <% servicios.forEach(function (s) { %>
+    <tr>
+      <td><%= s.nombre %></td><td><%= s.plan %></td><td><%= s.descripcion || '—' %></td>
+      <td>$<%= Number(s.precio).toLocaleString('es-CO') %></td>
+      <td class="actions">
+        <a role="button" class="secondary" href="/servicios/<%= s.id_servicio %>/editar">Editar</a>
+        <form method="post" action="/servicios/<%= s.id_servicio %>/eliminar" onsubmit="return confirm('¿Eliminar este servicio?')">
+          <input type="hidden" name="_csrf" value="<%= csrf %>">
+          <button class="contrast outline">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

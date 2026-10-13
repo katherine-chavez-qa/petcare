@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+<h2><%= titulo %></h2>
+<form method="post" action="<%= action %>" novalidate>
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <label>Nombre
+    <input name="nombre" value="<%= mascota.nombre || '' %>" maxlength="80" required>
+  </label>
+  <div class="grid">
+    <label>Especie
+      <input name="especie" value="<%= mascota.especie || '' %>" maxlength="50" placeholder="Perro, Gato..." required>
+    </label>
+    <label>Raza
+      <input name="raza" value="<%= mascota.raza || '' %>" maxlength="80">
+    </label>
+    <label>Edad (años)
+      <input type="number" name="edad" min="0" step="1" value="<%= mascota.edad === undefined ? '' : mascota.edad %>" required>
+    </label>
+  </div>
+  <label>Cliente (dueño)
+    <select name="id_cliente" required>
+      <option value="">Selecciona un cliente</option>
+      <% clientes.forEach(function (c) { %>
+        <option value="<%= c.id_cliente %>" <%= String(c.id_cliente) === String(mascota.id_cliente) ? 'selected' : '' %>><%= c.nombre %></option>
+      <% }) %>
+    </select>
+  </label>
+  <div class="actions">
+    <button type="submit">Guardar</button>
+    <a role="button" class="secondary" href="/mascotas">Cancelar</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

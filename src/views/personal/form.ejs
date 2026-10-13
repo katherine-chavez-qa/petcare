@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+<h2><%= titulo %></h2>
+<form method="post" action="<%= action %>" novalidate autocomplete="off">
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <label>Nombre completo
+    <input name="nombre" value="<%= persona.nombre || '' %>" maxlength="100" required>
+  </label>
+  <div class="grid">
+    <label>Cargo
+      <input name="cargo" value="<%= persona.cargo || '' %>" maxlength="80" placeholder="Groomer, Veterinario..." required>
+    </label>
+    <label>Teléfono (solo números)
+      <input name="telefono" value="<%= persona.telefono || '' %>" inputmode="numeric" maxlength="15" required>
+    </label>
+  </div>
+  <fieldset>
+    <legend>Acceso al sistema (rol Personal de Servicios)</legend>
+    <% if (persona.id_personal && persona.correo_acceso) { %>
+      <p>Esta persona ya tiene acceso con el correo <strong><%= persona.correo_acceso %></strong>.</p>
+    <% } else { %>
+      <small>Opcional. Si completas estos campos se crea un usuario para que consulte sus citas.</small>
+      <div class="grid">
+        <label>Correo de acceso
+          <input type="email" name="correo_acceso" value="<%= persona.correo_acceso || '' %>" maxlength="120">
+        </label>
+        <label>Contraseña (mín. 8 caracteres)
+          <input type="password" name="password" autocomplete="new-password">
+        </label>
+      </div>
+    <% } %>
+  </fieldset>
+  <div class="actions">
+    <button type="submit">Guardar</button>
+    <a role="button" class="secondary" href="/personal">Cancelar</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

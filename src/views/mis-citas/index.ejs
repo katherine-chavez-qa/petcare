@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+<h2>Mis citas asignadas</h2>
+<form method="get" action="/mis-citas" class="grid">
+  <select name="estado" aria-label="Estado">
+    <option value="">Todos los estados</option>
+    <% ['Programada','Completada','Cancelada'].forEach(function (e) { %><option <%= e === estado ? 'selected' : '' %>><%= e %></option><% }) %>
+  </select>
+  <button type="submit">Filtrar</button>
+</form>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Fecha</th><th>Hora</th><th>Mascota</th><th>Servicio</th><th>Estado</th><th></th></tr></thead>
+  <tbody>
+  <% if (!citas.length) { %><tr><td colspan="6">No tienes citas asignadas.</td></tr><% } %>
+  <% citas.forEach(function (c) { %>
+    <tr>
+      <td><%= fmtFecha(c.fecha) %></td><td><%= fmtHora(c.hora) %></td><td><%= c.mascota %> (<%= c.especie %>)</td>
+      <td><%= c.servicio %></td>
+      <td><span class="badge <%= c.estado %>"><%= c.estado %></span></td>
+      <td class="actions"><a role="button" href="/mis-citas/<%= c.id_cita %>"><%= c.estado === 'Programada' ? 'Atender' : 'Ver' %></a></td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

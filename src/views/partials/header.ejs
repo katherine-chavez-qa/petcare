@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= titulo %> · PetCare</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css">
+  <link rel="stylesheet" href="/public/app.css">
+</head>
+<body>
+<% if (user) { %>
+<nav class="container top">
+  <ul><li><strong><a href="/" class="contrast" style="text-decoration:none">🐾 PetCare</a></strong></li></ul>
+  <ul>
+    <% if (user.rol === 'ADMIN') { %>
+      <li><a href="/clientes">Clientes</a></li>
+      <li><a href="/mascotas">Mascotas</a></li>
+      <li><a href="/servicios">Servicios</a></li>
+      <li><a href="/personal">Personal</a></li>
+      <li><a href="/citas">Citas</a></li>
+      <li><a href="/tratamientos">Tratamientos</a></li>
+    <% } else { %>
+      <li><a href="/mis-citas">Mis citas</a></li>
+    <% } %>
+    <li>
+      <form method="post" action="/logout" style="margin:0">
+        <input type="hidden" name="_csrf" value="<%= csrf %>">
+        <button class="secondary outline" style="padding:.25rem .75rem">Salir (<%= user.nombre %>)</button>
+      </form>
+    </li>
+  </ul>
+</nav>
+<% } %>
+<main class="container">
+<% if (typeof errores !== 'undefined' && errores && errores.length) { %>
+  <div class="flash error" role="alert"><ul><% errores.forEach(function (m) { %><li><%= m %></li><% }) %></ul></div>
+<% } %>
+<% if (flash) { %>
+  <div class="flash <%= flash.type %>" role="alert">
+    <% if (Array.isArray(flash.msg)) { %><ul><% flash.msg.forEach(function (m) { %><li><%= m %></li><% }) %></ul><% } else { %><%= flash.msg %><% } %>
+  </div>
+<% } %>

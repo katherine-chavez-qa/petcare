@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+<div class="toolbar">
+  <h2>Personal de servicios</h2>
+  <a href="/personal/nuevo" role="button">+ Nuevo personal</a>
+</div>
+<form method="get" action="/personal" role="search">
+  <input type="search" name="q" value="<%= q %>" placeholder="Buscar por nombre, cargo o teléfono">
+  <button type="submit">Buscar</button>
+</form>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Nombre</th><th>Cargo</th><th>Teléfono</th><th>Acceso al sistema</th><th>Acciones</th></tr></thead>
+  <tbody>
+  <% if (!personal.length) { %><tr><td colspan="5">No hay personal registrado.</td></tr><% } %>
+  <% personal.forEach(function (p) { %>
+    <tr>
+      <td><%= p.nombre %></td><td><%= p.cargo %></td><td><%= p.telefono %></td><td><%= p.correo_acceso || 'Sin acceso' %></td>
+      <td class="actions">
+        <a role="button" class="secondary" href="/personal/<%= p.id_personal %>/editar">Editar</a>
+        <form method="post" action="/personal/<%= p.id_personal %>/eliminar" onsubmit="return confirm('¿Eliminar a esta persona?')">
+          <input type="hidden" name="_csrf" value="<%= csrf %>">
+          <button class="contrast outline">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

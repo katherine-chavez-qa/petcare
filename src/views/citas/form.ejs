@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+<h2><%= titulo %></h2>
+<form method="post" action="<%= action %>" novalidate>
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <div class="grid">
+    <label>Fecha
+      <input type="date" name="fecha" min="<%= hoy %>" value="<%= cita.fecha || '' %>" required>
+    </label>
+    <label>Hora
+      <input type="time" name="hora" value="<%= cita.hora ? fmtHora(cita.hora) : '' %>" required>
+    </label>
+  </div>
+  <label>Mascota
+    <select name="id_mascota" required>
+      <option value="">Selecciona una mascota</option>
+      <% mascotas.forEach(function (m) { %>
+        <option value="<%= m.id_mascota %>" <%= String(m.id_mascota) === String(cita.id_mascota) ? 'selected' : '' %>><%= m.nombre %> (<%= m.cliente %>)</option>
+      <% }) %>
+    </select>
+  </label>
+  <label>Servicio
+    <select name="id_servicio" required>
+      <option value="">Selecciona un servicio</option>
+      <% servicios.forEach(function (s) { %>
+        <option value="<%= s.id_servicio %>" <%= String(s.id_servicio) === String(cita.id_servicio) ? 'selected' : '' %>><%= s.nombre %> · <%= s.plan %> · $<%= Number(s.precio).toLocaleString('es-CO') %></option>
+      <% }) %>
+    </select>
+  </label>
+  <label>Personal responsable
+    <select name="id_personal" required>
+      <option value="">Selecciona un miembro del personal</option>
+      <% personal.forEach(function (p) { %>
+        <option value="<%= p.id_personal %>" <%= String(p.id_personal) === String(cita.id_personal) ? 'selected' : '' %>><%= p.nombre %> – <%= p.cargo %></option>
+      <% }) %>
+    </select>
+  </label>
+  <div class="actions">
+    <button type="submit">Guardar</button>
+    <a role="button" class="secondary" href="/citas">Cancelar</a>
+  </div>
+</form>
+<%- include('../partials/footer') %>

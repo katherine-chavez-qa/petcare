@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+<div class="toolbar">
+  <h2>Tratamientos</h2>
+  <a href="/tratamientos/nuevo" role="button">+ Registrar tratamiento</a>
+</div>
+<form method="get" action="/tratamientos" role="search">
+  <input type="search" name="q" value="<%= q %>" placeholder="Buscar por descripción, mascota o servicio">
+  <button type="submit">Buscar</button>
+</form>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Fecha</th><th>Mascota</th><th>Servicio</th><th>Personal</th><th>Descripción</th><th>Observaciones</th><th>Acciones</th></tr></thead>
+  <tbody>
+  <% if (!tratamientos.length) { %><tr><td colspan="7">No hay tratamientos registrados.</td></tr><% } %>
+  <% tratamientos.forEach(function (t) { %>
+    <tr>
+      <td><%= fmtFecha(t.fecha) %></td><td><%= t.mascota %></td><td><%= t.servicio %></td><td><%= t.personal %></td>
+      <td><%= t.descripcion %></td><td><%= t.observaciones || '—' %></td>
+      <td class="actions">
+        <a role="button" class="secondary" href="/tratamientos/<%= t.id_tratamiento %>/editar">Editar</a>
+        <form method="post" action="/tratamientos/<%= t.id_tratamiento %>/eliminar" onsubmit="return confirm('¿Eliminar este tratamiento?')">
+          <input type="hidden" name="_csrf" value="<%= csrf %>">
+          <button class="contrast outline">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

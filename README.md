@@ -71,7 +71,7 @@ npm run db:init           # crea las tablas
 npm run db:seed           # carga datos de ejemplo (usa -- --reset para reiniciar)
 npm start                 # http://localhost:3000
 ```
-Credenciales en [CREDENCIALES_PRUEBA.md](CREDENCIALES_PRUEBA.md). Pantallas en [PANTALLAS.md](PANTALLAS.md).
+Credenciales en [CREDENCIALES_PRUEBA.md](CREDENCIALES_PRUEBA.md). Pantallas en [PANTALLAS.md](PANTALLAS.md). Manual de usuario: [docs/Manual_de_Usuario_PetCare.docx](docs/Manual_de_Usuario_PetCare.docx) (capturas en `docs/capturas`).
 
 Datos semilla: 1 administrador, 3 personas de personal (con usuario), 5 clientes, 8 mascotas, 6 servicios en planes Básico/Estándar/Premium, 10 citas en distintos estados y 4 tratamientos.
 

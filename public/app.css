@@ -16,3 +16,14 @@ nav.top { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom
 .table-wrap { overflow-x: auto; }
 .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
 .toolbar a[role=button] { width: auto; }
+
+/* Avisos legibles también en modo oscuro del sistema */
+.flash.success, .flash.success * { color: #14532d; }
+.flash.error, .flash.error * { color: #7f1d1d; }
+
+/* Layout un poco más ancho y tablas compactas para que las acciones no se corten */
+main.container, nav.container, footer.container { max-width: 1320px; padding-inline: 1.25rem; }
+table { font-size: .9rem; }
+th, td { padding: .5rem .6rem; }
+td.actions { min-width: 8.5rem; }
+td.actions a[role=button], td.actions button { display: inline-block; white-space: nowrap; }
